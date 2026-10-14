@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://cu52235vvjl56"]
+
+[ext_resource type="Script" uid="uid://boeiaof4legpa" path="res://Scripts/MovementScript.cs" id="1_q04mn"]
+[ext_resource type="Texture2D" uid="uid://bbpp7xogv3p3c" path="res://Sprites/samuiso/1.png" id="2_vwpgl"]
+[ext_resource type="Texture2D" uid="uid://b04owyxgbh0co" path="res://Sprites/samuiso/2.png" id="3_186y2"]
+[ext_resource type="Texture2D" uid="uid://iv6v78phbuss" path="res://Sprites/samuiso/3.png" id="4_u6i2j"]
+[ext_resource type="Texture2D" uid="uid://sre2we72ba2x" path="res://Sprites/samuiso/4.png" id="5_jdyf8"]
+[ext_resource type="Texture2D" uid="uid://4hyb1r1m8tyh" path="res://Sprites/corazón.png" id="6_c4ut7"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_51fxn"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vwpgl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_186y2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_u6i2j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_jdyf8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_vwpgl")
+}],
+"loop": 0,
+"name": &"Walking",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_vwpgl")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5n1g4"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(32, 32, 1)
+gravity = Vector3(0, -98, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_51fxn"]
+size = Vector2(93, 97)
+
+[node name="Samuiso" type="Node" unique_id=1899080174 node_paths=PackedStringArray("timer1", "sprite", "rigidbody", "particulas")]
+script = ExtResource("1_q04mn")
+timer1 = NodePath("")
+sprite = NodePath("RigidBody2D/AnimatedSprite2D")
+rigidbody = NodePath("RigidBody2D")
+particulas = NodePath("RigidBody2D/GPUParticles2D")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="." unique_id=158278978]
+position = Vector2(-55, -65)
+input_pickable = true
+gravity_scale = 0.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="RigidBody2D" unique_id=1181871678]
+texture_filter = 1
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_51fxn")
+animation = &"Walking"
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="RigidBody2D" unique_id=1441229626]
+position = Vector2(1, -16)
+emitting = false
+amount = 7
+texture = ExtResource("6_c4ut7")
+process_material = SubResource("ParticleProcessMaterial_5n1g4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D" unique_id=2098246763]
+position = Vector2(1.5, -0.5)
+shape = SubResource("RectangleShape2D_51fxn")
+
+[connection signal="mouse_entered" from="RigidBody2D" to="." method="OnRigidBody2dMouseEntered"]
+[connection signal="mouse_exited" from="RigidBody2D" to="." method="OnRigidBody2dMouseExited"]

@@ -3,11 +3,13 @@
 [ext_resource type="Texture2D" uid="uid://b43lw6i1asjw" path="res://Sprites/tilemap 1.png" id="1_wtcfe"]
 [ext_resource type="AudioStream" uid="uid://dn3as3irftjth" path="res://sfx/cancionciudad.mp3" id="2_0e48y"]
 [ext_resource type="Texture2D" uid="uid://bbpp7xogv3p3c" path="res://Sprites/samuiso/1.png" id="3_0hol4"]
-[ext_resource type="Script" uid="uid://boeiaof4legpa" path="res://NewScript.cs" id="3_epypp"]
+[ext_resource type="Script" uid="uid://boeiaof4legpa" path="res://Scripts/MovementScript.cs" id="3_epypp"]
 [ext_resource type="Texture2D" uid="uid://b04owyxgbh0co" path="res://Sprites/samuiso/2.png" id="5_d21ai"]
 [ext_resource type="Texture2D" uid="uid://iv6v78phbuss" path="res://Sprites/samuiso/3.png" id="6_rj586"]
 [ext_resource type="Texture2D" uid="uid://sre2we72ba2x" path="res://Sprites/samuiso/4.png" id="7_4d7sh"]
 [ext_resource type="Texture2D" uid="uid://4hyb1r1m8tyh" path="res://Sprites/corazón.png" id="8_rj586"]
+[ext_resource type="Texture2D" uid="uid://cxlyfy65vnspo" path="res://Sprites/comidamala.png" id="9_4d7sh"]
+[ext_resource type="Script" uid="uid://ebcnp5l5fes8" path="res://Scripts/AlimentarScript.cs" id="9_ir8iy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0e48y"]
 texture = ExtResource("1_wtcfe")
@@ -126,7 +128,13 @@ emission_box_extents = Vector3(32, 32, 1)
 gravity = Vector3(0, -98, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_51fxn"]
-size = Vector2(93, 96)
+size = Vector2(93, 97)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rj586"]
+size = Vector2(10, 1500)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3wt43"]
+size = Vector2(95, 97)
 
 [node name="Node2D" type="Node2D" unique_id=1873843235]
 
@@ -146,15 +154,19 @@ stream = ExtResource("2_0e48y")
 volume_db = -11.992
 autoplay = true
 
-[node name="Samuiso" type="Node" parent="." unique_id=20114794 node_paths=PackedStringArray("timer1", "sprite", "rigidbody")]
+[node name="Samuiso" type="Node" parent="." unique_id=20114794 node_paths=PackedStringArray("timer1", "sprite", "rigidbody", "particulas")]
 script = ExtResource("3_epypp")
 timer1 = NodePath("../Timer")
 sprite = NodePath("RigidBody2D/AnimatedSprite2D")
 rigidbody = NodePath("RigidBody2D")
+particulas = NodePath("RigidBody2D/GPUParticles2D")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="Samuiso" unique_id=82759802]
-position = Vector2(-55, -65)
+input_pickable = true
 gravity_scale = 0.0
+lock_rotation = true
+linear_damp_mode = 1
+angular_damp_mode = 1
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Samuiso/RigidBody2D" unique_id=1593706807]
 texture_filter = 1
@@ -170,8 +182,59 @@ texture = ExtResource("8_rj586")
 process_material = SubResource("ParticleProcessMaterial_5n1g4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Samuiso/RigidBody2D" unique_id=119365404]
-position = Vector2(1.5, -1)
+position = Vector2(1.5, -0.5)
 shape = SubResource("RectangleShape2D_51fxn")
 
 [node name="Timer" type="Timer" parent="." unique_id=1991807888]
 wait_time = 5.0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=504704578]
+position = Vector2(0, 324)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1910691928]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_rj586")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=1622883540]
+position = Vector2(576, 0)
+rotation = -1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=351143636]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_rj586")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=1859937179]
+position = Vector2(-575, 0)
+rotation = 1.5707964
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=2039760584]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_rj586")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="." unique_id=288299316]
+position = Vector2(0, -317)
+rotation = -3.1415925
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4" unique_id=1445001999]
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_rj586")
+
+[node name="Comida" type="Node" parent="." unique_id=21920544 node_paths=PackedStringArray("rigidbody")]
+script = ExtResource("9_ir8iy")
+rigidbody = NodePath("")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Comida" unique_id=824376780]
+position = Vector2(387, -183)
+input_pickable = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Comida/StaticBody2D" unique_id=248655028]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("9_4d7sh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Comida/StaticBody2D" unique_id=866425584]
+shape = SubResource("RectangleShape2D_3wt43")
+
+[connection signal="mouse_entered" from="Samuiso/RigidBody2D" to="Samuiso" method="OnRigidBody2dMouseEntered"]
+[connection signal="mouse_exited" from="Samuiso/RigidBody2D" to="Samuiso" method="OnRigidBody2dMouseExited"]
+[connection signal="input_event" from="Comida/StaticBody2D" to="Samuiso" method="MyInputMethod" binds= [NodePath("../Comida")]]
