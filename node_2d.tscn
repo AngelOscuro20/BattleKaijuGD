@@ -10,6 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://4hyb1r1m8tyh" path="res://Sprites/corazón.png" id="8_rj586"]
 [ext_resource type="Texture2D" uid="uid://cxlyfy65vnspo" path="res://Sprites/comidamala.png" id="9_4d7sh"]
 [ext_resource type="Script" uid="uid://ebcnp5l5fes8" path="res://Scripts/AlimentarScript.cs" id="9_ir8iy"]
+[ext_resource type="Texture2D" uid="uid://u73m1x6ij3n1" path="res://Sprites/hunger.png" id="11_hqns4"]
+[ext_resource type="Script" uid="uid://bfe3wxssb48kx" path="res://Scripts/GUIScript.cs" id="11_nr8wp"]
+[ext_resource type="Texture2D" uid="uid://ctrhw2qxho2nf" path="res://Sprites/dumbell 1.png" id="12_x0ka3"]
+[ext_resource type="Script" uid="uid://6g6fvssvjt3i" path="res://Scripts/CareManagerScript.cs" id="13_0h7mo"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0e48y"]
 texture = ExtResource("1_wtcfe")
@@ -156,7 +160,7 @@ autoplay = true
 
 [node name="Samuiso" type="Node" parent="." unique_id=20114794 node_paths=PackedStringArray("timer1", "sprite", "rigidbody", "particulas")]
 script = ExtResource("3_epypp")
-timer1 = NodePath("../Timer")
+timer1 = NodePath("../CareManager/TimerMovimiento")
 sprite = NodePath("RigidBody2D/AnimatedSprite2D")
 rigidbody = NodePath("RigidBody2D")
 particulas = NodePath("RigidBody2D/GPUParticles2D")
@@ -184,9 +188,6 @@ process_material = SubResource("ParticleProcessMaterial_5n1g4")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Samuiso/RigidBody2D" unique_id=119365404]
 position = Vector2(1.5, -0.5)
 shape = SubResource("RectangleShape2D_51fxn")
-
-[node name="Timer" type="Timer" parent="." unique_id=1991807888]
-wait_time = 5.0
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=504704578]
 position = Vector2(0, 324)
@@ -219,9 +220,8 @@ rotation = -3.1415925
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_rj586")
 
-[node name="Comida" type="Node" parent="." unique_id=21920544 node_paths=PackedStringArray("rigidbody")]
+[node name="Comida" type="Node" parent="." unique_id=21920544]
 script = ExtResource("9_ir8iy")
-rigidbody = NodePath("")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Comida" unique_id=824376780]
 position = Vector2(387, -183)
@@ -235,6 +235,99 @@ texture = ExtResource("9_4d7sh")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Comida/StaticBody2D" unique_id=866425584]
 shape = SubResource("RectangleShape2D_3wt43")
 
+[node name="GUI" type="VBoxContainer" parent="." unique_id=328817168 node_paths=PackedStringArray("CareManager", "containerHambre", "containerFuerza")]
+offset_left = -569.0
+offset_top = -309.0
+offset_right = -52.0
+offset_bottom = -116.0
+script = ExtResource("11_nr8wp")
+CareManager = NodePath("../CareManager")
+containerHambre = NodePath("HambreContainer")
+containerFuerza = NodePath("EntrenarContainer")
+
+[node name="HambreContainer" type="HBoxContainer" parent="GUI" unique_id=1416414640]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="GUI/HambreContainer" unique_id=1957323845]
+visible = false
+layout_mode = 2
+texture = ExtResource("11_hqns4")
+expand_mode = 3
+
+[node name="TextureRect2" type="TextureRect" parent="GUI/HambreContainer" unique_id=1285758350]
+visible = false
+layout_mode = 2
+texture = ExtResource("11_hqns4")
+expand_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="GUI/HambreContainer" unique_id=453903132]
+visible = false
+layout_mode = 2
+texture = ExtResource("11_hqns4")
+expand_mode = 3
+
+[node name="TextureRect4" type="TextureRect" parent="GUI/HambreContainer" unique_id=795740352]
+visible = false
+layout_mode = 2
+texture = ExtResource("11_hqns4")
+expand_mode = 3
+
+[node name="TextureRect5" type="TextureRect" parent="GUI/HambreContainer" unique_id=1564247323]
+visible = false
+layout_mode = 2
+texture = ExtResource("11_hqns4")
+expand_mode = 3
+
+[node name="EntrenarContainer" type="HBoxContainer" parent="GUI" unique_id=626627491]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="GUI/EntrenarContainer" unique_id=251730961]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_x0ka3")
+expand_mode = 3
+
+[node name="TextureRect2" type="TextureRect" parent="GUI/EntrenarContainer" unique_id=1163976651]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_x0ka3")
+expand_mode = 3
+
+[node name="TextureRect3" type="TextureRect" parent="GUI/EntrenarContainer" unique_id=1956684599]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_x0ka3")
+expand_mode = 3
+
+[node name="TextureRect4" type="TextureRect" parent="GUI/EntrenarContainer" unique_id=54853981]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_x0ka3")
+expand_mode = 3
+
+[node name="TextureRect5" type="TextureRect" parent="GUI/EntrenarContainer" unique_id=973361894]
+visible = false
+layout_mode = 2
+texture = ExtResource("12_x0ka3")
+expand_mode = 3
+
+[node name="CareManager" type="Node" parent="." unique_id=1104597660 node_paths=PackedStringArray("GUI", "timerComer", "timerEntrenar")]
+script = ExtResource("13_0h7mo")
+GUI = NodePath("../GUI")
+timerComer = NodePath("TimerComer")
+timerEntrenar = NodePath("TimerEntrenar")
+
+[node name="TimerMovimiento" type="Timer" parent="CareManager" unique_id=1991807888]
+wait_time = 5.0
+
+[node name="TimerEntrenar" type="Timer" parent="CareManager" unique_id=113510076]
+
+[node name="TimerComer" type="Timer" parent="CareManager" unique_id=1185192768]
+
 [connection signal="mouse_entered" from="Samuiso/RigidBody2D" to="Samuiso" method="OnRigidBody2dMouseEntered"]
 [connection signal="mouse_exited" from="Samuiso/RigidBody2D" to="Samuiso" method="OnRigidBody2dMouseExited"]
 [connection signal="input_event" from="Comida/StaticBody2D" to="Samuiso" method="MyInputMethod" binds= [NodePath("../Comida")]]
+[connection signal="timeout" from="CareManager/TimerEntrenar" to="CareManager" method="EntrenarSignal"]
+[connection signal="timeout" from="CareManager/TimerComer" to="CareManager" method="ComerSignal"]

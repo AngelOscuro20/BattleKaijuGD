@@ -6,16 +6,11 @@ public partial class MovementScript : Node
 {
 
 	public bool petting = false;
-[Export]
-	Timer timer1;
-[Export]
-	int prueba = 0;
-[Export]
-private AnimatedSprite2D sprite;
-[Export]
-private RigidBody2D rigidbody;
-[Export]
-private GpuParticles2D particulas;
+	[Export] Timer timer1;
+	[Export] int prueba = 0;
+	[Export] private AnimatedSprite2D sprite;
+	[Export] private RigidBody2D rigidbody;
+	[Export] private GpuParticles2D particulas;
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
@@ -72,7 +67,8 @@ private GpuParticles2D particulas;
 	{
 		for (int i = 0; i < 10; i++)
 		{
-		if(node.Position.X > 0)sprite.FlipH =true;
+		if(node.Position.X > 0){sprite.FlipH =true;}
+		else{sprite.FlipH =false;};
 		sprite.Play("Walking");
 		GD.Print(node.Position);
 		Vector2 hacia = rigidbody.Position.MoveToward(node.Position,10);
