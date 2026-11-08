@@ -22,7 +22,7 @@ public partial class GUIScript : VBoxContainer
 	{ 
 		for(int i = 0;i < containerHambre.GetChildCount();i++)
 		{
-			if(i < CareManager.getHambre()){containerHambre.GetChild<TextureRect>(i).Visible = true;}
+			if(i < CareManager.GetHambre()){containerHambre.GetChild<TextureRect>(i).Visible = true;}
 			else{containerHambre.GetChild<TextureRect>(i).Visible = false;}
 		}
 		
@@ -31,7 +31,7 @@ public partial class GUIScript : VBoxContainer
 	{ 
 		for(int i = 0;i < containerFuerza.GetChildCount();i++)
 		{
-			if(i < CareManager.getFuerza()){containerFuerza.GetChild<TextureRect>(i).Visible = true;}
+			if(i < CareManager.GetFuerza()){containerFuerza.GetChild<TextureRect>(i).Visible = true;}
 			else{containerFuerza.GetChild<TextureRect>(i).Visible = false;}
 		}
 		

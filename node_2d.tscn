@@ -10,8 +10,10 @@
 [ext_resource type="Texture2D" uid="uid://4hyb1r1m8tyh" path="res://Sprites/corazón.png" id="8_rj586"]
 [ext_resource type="Texture2D" uid="uid://cxlyfy65vnspo" path="res://Sprites/comidamala.png" id="9_4d7sh"]
 [ext_resource type="Script" uid="uid://ebcnp5l5fes8" path="res://Scripts/AlimentarScript.cs" id="9_ir8iy"]
+[ext_resource type="Texture2D" uid="uid://bdw2o0xl7snqx" path="res://Sprites/saco2.png" id="11_d2bti"]
 [ext_resource type="Texture2D" uid="uid://u73m1x6ij3n1" path="res://Sprites/hunger.png" id="11_hqns4"]
 [ext_resource type="Script" uid="uid://bfe3wxssb48kx" path="res://Scripts/GUIScript.cs" id="11_nr8wp"]
+[ext_resource type="Script" uid="uid://bhmb5yxue0k0v" path="res://Scripts/EntrenarScript.cs" id="11_ta5nu"]
 [ext_resource type="Texture2D" uid="uid://ctrhw2qxho2nf" path="res://Sprites/dumbell 1.png" id="12_x0ka3"]
 [ext_resource type="Script" uid="uid://6g6fvssvjt3i" path="res://Scripts/CareManagerScript.cs" id="13_0h7mo"]
 
@@ -160,7 +162,7 @@ autoplay = true
 
 [node name="Samuiso" type="Node" parent="." unique_id=20114794 node_paths=PackedStringArray("timer1", "sprite", "rigidbody", "particulas")]
 script = ExtResource("3_epypp")
-timer1 = NodePath("../CareManager/TimerMovimiento")
+timer1 = NodePath("../GUI/EntrenarContainer/TextureRect5/CareManager/TimerMovimiento")
 sprite = NodePath("RigidBody2D/AnimatedSprite2D")
 rigidbody = NodePath("RigidBody2D")
 particulas = NodePath("RigidBody2D/GPUParticles2D")
@@ -220,8 +222,9 @@ rotation = -3.1415925
 rotation = 1.5707964
 shape = SubResource("RectangleShape2D_rj586")
 
-[node name="Comida" type="Node" parent="." unique_id=21920544]
+[node name="Comida" type="Node" parent="." unique_id=21920544 node_paths=PackedStringArray("CareManager")]
 script = ExtResource("9_ir8iy")
+CareManager = NodePath("../GUI/EntrenarContainer/TextureRect5/CareManager")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="Comida" unique_id=824376780]
 position = Vector2(387, -183)
@@ -235,13 +238,29 @@ texture = ExtResource("9_4d7sh")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Comida/StaticBody2D" unique_id=866425584]
 shape = SubResource("RectangleShape2D_3wt43")
 
+[node name="Saco" type="Node" parent="." unique_id=1609518819 node_paths=PackedStringArray("CareManager")]
+script = ExtResource("11_ta5nu")
+CareManager = NodePath("../GUI/EntrenarContainer/TextureRect5/CareManager")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Saco" unique_id=1000642471]
+position = Vector2(-396, 190)
+input_pickable = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Saco/StaticBody2D" unique_id=1999408036]
+texture_filter = 1
+scale = Vector2(3, 3)
+texture = ExtResource("11_d2bti")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Saco/StaticBody2D" unique_id=634120600]
+shape = SubResource("RectangleShape2D_3wt43")
+
 [node name="GUI" type="VBoxContainer" parent="." unique_id=328817168 node_paths=PackedStringArray("CareManager", "containerHambre", "containerFuerza")]
 offset_left = -569.0
 offset_top = -309.0
 offset_right = -52.0
 offset_bottom = -116.0
 script = ExtResource("11_nr8wp")
-CareManager = NodePath("../CareManager")
+CareManager = NodePath("EntrenarContainer/TextureRect5/CareManager")
 containerHambre = NodePath("HambreContainer")
 containerFuerza = NodePath("EntrenarContainer")
 
@@ -313,21 +332,24 @@ layout_mode = 2
 texture = ExtResource("12_x0ka3")
 expand_mode = 3
 
-[node name="CareManager" type="Node" parent="." unique_id=1104597660 node_paths=PackedStringArray("GUI", "timerComer", "timerEntrenar")]
+[node name="CareManager" type="Node" parent="GUI/EntrenarContainer/TextureRect5" unique_id=1104597660 node_paths=PackedStringArray("GUI", "timerComer", "timerEntrenar")]
 script = ExtResource("13_0h7mo")
-GUI = NodePath("../GUI")
+GUI = NodePath("../../..")
 timerComer = NodePath("TimerComer")
 timerEntrenar = NodePath("TimerEntrenar")
 
-[node name="TimerMovimiento" type="Timer" parent="CareManager" unique_id=1991807888]
+[node name="TimerMovimiento" type="Timer" parent="GUI/EntrenarContainer/TextureRect5/CareManager" unique_id=1991807888]
 wait_time = 5.0
 
-[node name="TimerEntrenar" type="Timer" parent="CareManager" unique_id=113510076]
+[node name="TimerEntrenar" type="Timer" parent="GUI/EntrenarContainer/TextureRect5/CareManager" unique_id=113510076]
 
-[node name="TimerComer" type="Timer" parent="CareManager" unique_id=1185192768]
+[node name="TimerComer" type="Timer" parent="GUI/EntrenarContainer/TextureRect5/CareManager" unique_id=1185192768]
 
 [connection signal="mouse_entered" from="Samuiso/RigidBody2D" to="Samuiso" method="OnRigidBody2dMouseEntered"]
 [connection signal="mouse_exited" from="Samuiso/RigidBody2D" to="Samuiso" method="OnRigidBody2dMouseExited"]
+[connection signal="input_event" from="Comida/StaticBody2D" to="Comida" method="MyInputMethod"]
 [connection signal="input_event" from="Comida/StaticBody2D" to="Samuiso" method="MyInputMethod" binds= [NodePath("../Comida")]]
-[connection signal="timeout" from="CareManager/TimerEntrenar" to="CareManager" method="EntrenarSignal"]
-[connection signal="timeout" from="CareManager/TimerComer" to="CareManager" method="ComerSignal"]
+[connection signal="input_event" from="Saco/StaticBody2D" to="Saco" method="MyInputMethod"]
+[connection signal="input_event" from="Saco/StaticBody2D" to="Samuiso" method="MyInputMethod" binds= [NodePath("../Saco")]]
+[connection signal="timeout" from="GUI/EntrenarContainer/TextureRect5/CareManager/TimerEntrenar" to="GUI/EntrenarContainer/TextureRect5/CareManager" method="EntrenarSignal"]
+[connection signal="timeout" from="GUI/EntrenarContainer/TextureRect5/CareManager/TimerComer" to="GUI/EntrenarContainer/TextureRect5/CareManager" method="ComerSignal"]

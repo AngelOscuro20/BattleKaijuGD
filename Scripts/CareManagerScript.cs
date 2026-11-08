@@ -19,8 +19,8 @@ public partial class CareManagerScript : Node
 	// Called every frame. 'delta' is the elapsed time since the previous frame.
 	public override void _Process(double delta)
 	{
-		GD.Print(hambre);
-		GD.Print(fuerza);
+		//GD.Print(hambre);
+		//GD.Print(fuerza);
 	}
 
 	public void ComerSignal()
@@ -36,7 +36,20 @@ public partial class CareManagerScript : Node
 		GD.Print("feurza");
 	}
 
-	public int getHambre(){return hambre;}
-	public int getFuerza(){return fuerza;}
+	public int GetHambre(){return hambre;}
+	public int GetFuerza(){return fuerza;}
+
+	public void ReponerHambre()
+	{
+		hambre++;
+		GUI.ActualizarHambre();
+		GD.Print("nom");
+	}
+
+	public void ReponerFuerza()
+	{
+		fuerza++;
+		GUI.ActualizarFuerza();
+	}
 
 }
